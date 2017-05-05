@@ -41,7 +41,7 @@ var action = {
 var videoSelect = bel`<select class="${css.selector}"></select>`
 var audioInputSelect = bel`<select class="${css.selector}"></select>`
 var audioOutputSelect = bel`<select class="${css.selector}"></select>`
-var video = bel`<video class="video" oncanplay=${action.play}>Video stream not available.</video>`
+var video = bel`<video class="video" oncanplay=${action.play} controls>Video stream not available.</video>`
 // var audio = element.querySelector('audio') // <audio>
 var canvas = bel`<canvas></canvas>`
 var photo = bel`<img alt="The screen capture will appear in this box.">`
@@ -82,7 +82,6 @@ document.body.appendChild(element)
 
 function playVideo (event) {
   if (!streaming) {
-    height = video.videoHeight / (video.videoWidth / width)
     video.setAttribute('width', width)
     video.setAttribute('height', height)
     canvas.setAttribute('width', width)
@@ -269,6 +268,8 @@ function gotStream (stream) {
   // video.play()
   // vs.
   video.onloadedmetadata = function (e) { // to unfreeze
+    width = video.videoWidth
+    height = video.videoHeight / (video.videoWidth / width)
     video.play() // or <video autoplay></video>
   }
 
