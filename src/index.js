@@ -13,6 +13,9 @@ var css = csjs`
     padding: 50px;
     align-items: center;
   }
+  .selectors {
+    display: flex;
+  }
   .selector {
     display: block;
   }
@@ -50,9 +53,11 @@ var processing = bel`<canvas class="${css.processing}"></canvas>`
 var element = bel`
   <div class="${css.mediabox}">
     <h1> works only on <code>https</code> or <code> localhost </code> </h1>
-    ${videoSelect}
-    ${audioInputSelect}
-    ${audioOutputSelect}
+    <div class="${css.selectors}">
+      ${videoSelect}
+      ${audioInputSelect}
+      ${audioOutputSelect}
+    </div>
     <div class="camera">
       <h1> Camera </h1>
       ${video}
