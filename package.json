@@ -1,0 +1,52 @@
+{
+  "name": "demo-media-devices",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "babel-plugin-yo-yoify": "^0.3.3",
+    "babel-preset-es2040": "^1.1.1",
+    "babelify": "^7.3.0",
+    "browserify-livereload": "^1.0.10",
+    "ecstatic": "^2.1.0",
+    "notify-error": "^1.2.0",
+    "npm-run-all": "^4.0.2",
+    "onchange": "^3.2.1",
+    "standard": "^9.0.2",
+    "tap-notify": "^1.0.0",
+    "tape": "^4.6.3",
+    "uglify-js": "^2.8.18",
+    "uglifyify": "^3.0.4",
+    "watchify": "^3.9.0"
+  },
+  "dependencies": {
+    "bel": "^4.6.0",
+    "csjs-inject": "^1.0.1"
+  },
+  "browserify": {
+    "transform": [
+      ["babelify", {
+        "plugins": [["yo-yoify"]],
+        "presets": [["es2040"]]
+      }],
+      ["uglifyify"]
+    ],
+    "development": [
+      ["babelify", {
+        "plugins": [["yo-yoify"]],
+        "presets": [["es2040"]]
+      }]
+    ]
+  },
+  "scripts": {
+    "serve": "ecstatic .",
+    "start": "npm-run-all -lpr serve watch monitor",
+    "minify": "uglifyjs --in-source-map inline --source-map-inline -c warnings=false -p relative",
+    "sourcemap": "exorcist --root ../ bundle.js.map > bundle.js",
+    "watch": "watchify --transform-key=development src/index.js -vd --delay 0 -p browserify-livereload -o bundle.js",
+    "monitor": "onchange bundle.js -- npm-run-all lint test --silent",
+    "build": "browserify src/index.js -d | npm run minify --silent | npm run sourcemap",
+    "lint": "standard | notify-error",
+    "test": "tape test | tap-notify"
+  }
+}
